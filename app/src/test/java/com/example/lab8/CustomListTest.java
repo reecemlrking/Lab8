@@ -40,6 +40,10 @@ public class CustomListTest {
         assertEquals(list.getCount(),listSize + 1);
     }
 
+    /**
+     * Tests if after adding a city to the list, the list has that city and
+     * checks if the list has a city that is not in the list.
+     */
     @Test
     public void hasCityTest(){
         list = MockCityList();
@@ -48,4 +52,18 @@ public class CustomListTest {
         assertTrue(list.hasCity(city));
         assertFalse(list.hasCity(new City("Saskatoon", "SK")));
     }
+
+    /**
+     * Adds a city to the list, asserts no IllegalArgumentException is thrown when deleting that city,
+     * and checks the same exception is thrown when trying to delete a city not present in the list
+     */
+    @Test
+    public void deleteCityTest(){
+        list = MockCityList();
+        City city = new City("Estevan", "SK");
+        list.addCity(city);
+        assertAll(list.delete(city));
+        assertThrows(IllegalArgumentException.class, list.delete(new City("Edmonton", "AB")));
+    }
+
 }
