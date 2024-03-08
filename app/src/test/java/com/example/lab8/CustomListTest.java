@@ -54,16 +54,18 @@ public class CustomListTest {
     }
 
     /**
-     * Adds a city to the list, asserts no IllegalArgumentException is thrown when deleting that city,
-     * and checks the same exception is thrown when trying to delete a city not present in the list
+     * Adds a city to the list, asserts no IllegalArgumentException is thrown when deleting that city
+     * as wells as that that city was in fact removed from the list and checks the same exception is
+     * thrown when trying to delete a city not present in the list
      */
     @Test
     public void deleteCityTest(){
         list = MockCityList();
         City city = new City("Estevan", "SK");
         list.addCity(city);
-        assertAll(list.delete(city));
-        assertThrows(IllegalArgumentException.class, list.delete(new City("Edmonton", "AB")));
+        assertAll(() -> list.delete(city));
+        assertFalse(list.hasCity(city)); //forgot this test case
+        assertThrows(IllegalArgumentException.class, () -> list.delete(new City("Edmonton", "AB")));
     }
 
 }
